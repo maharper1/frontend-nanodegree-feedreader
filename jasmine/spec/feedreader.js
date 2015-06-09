@@ -181,4 +181,32 @@ $(function() {
             done();
         });
     });
+
+    /* Test suite for feature allowing the user to set the number
+     * of entries to return for each feed.
+     */
+    describe('Number of Entries per Feed', function() {
+        var inputNo = document.getElementsByClassName('entryCount')[0];
+
+        // Check if an input field for the number of entries exists.
+        it('input field exists', function() {
+            expect(inputNo).not.toBeFalsy();
+        });
+
+        // Check if the actual entry count equals the user's choice.
+        // Load the first feed option and set done in the callback function.
+        beforeEach(function(done) {
+            loadFeed(0, function() {
+                done();
+            });
+        });
+
+        // When the beforeEach action is done, check the count.
+        it('matches actual entry count', function() {
+            var feedContainer = document.getElementsByClassName('feed')[0];
+            var entries = feedContainer.getElementsByClassName('entry');
+            expect(entries.length).toEqual(inputNo.value);
+            done();
+        });
+    });
 }());
